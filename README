@@ -1,0 +1,50 @@
+This plugin allows 'instant' visualisation of 3D chemical structures in Mahara.
+
+It relies on the remarkable Chemical Identifier Resolver service developed by the Computer-Aided Drug Design (CADD) Group of the Chemical Biology Laboratory (CBL), National Cancer Institute (NCI), National Institute of Health (NIH) located at NCI-Frederick.
+
+http://cactus.nci.nih.gov/chemical/structure
+
+The Jmol NIH (jmolnih) plugin returns returns a Structure Data File (sdf) for any meaningful chemical search term. Valid search terms include a trivial chemical name, systematic (e.g. IUPAC) chemical name, SMILES, InChI or InChIKey. You can set the height and width of the block. These are rendered by the awesome Jmol Java applet.
+
+http://jmol.sf.net
+
+To avoid security issues with remote file access by the unsigned Java applet, the file contents are read via PHP into a string variable which is then loaded by Jmol. Ugly, but it works! 
+
+http://jmol.sf.net
+
+So, just type in an appropriate term (e.g. ethanol, morphine, buckyball, Cl/C=C\Cl) and you get an (almost) instant 3D structure.
+
+For more advanced Jmol users, there are a couple of textarea controls that allow you to:
+ 
+1. Specify an optional Jmol startup script to customise initial display of the applet
+http://chemapps.stolaf.edu/jmol/docs/
+
+2. Enter optional Jmol.js JavaScript commands to add custom commands below the applet
+http://jmol.sourceforge.net/jslibrary/
+
+Default script values are applied for general use
+
+Note that development has focused on the functionality of this, and there may be security implications of running these scripts. Happy to receive advice and guidance from Mahara security gurus about this.
+
+
+Installation
+
+The plugin can be downloaded from Github
+
+https://github.com/geoffrowland/mahara-blocktype_jmolnih
+
+On unpackging, the /jmolnih folders (and their contents) are simply copied into the /blocktype folder of your Mahara installation
+
+For the /jmolnih plugin you also need to download and unpack the latest Jmol stable version (currently 12.0.43), rename the unpacked folder (e.g. /jmol-12.0.43) to /jmol and copy this (and its contents) into the /lib folder of your Mahara installation to give /lib/jmol. Not all the contents of the jmol folder are actually required. However, Jmol code is frequently updated so it is convenient to just replace the /jmol folder with the latest version.
+
+Finally, visit your Site Administration > Plugin Administration page to enable the plugins.
+
+Of course, for the /jmolnih plugin, you will need an up-to-date Java installation on the client computer
+http://www.java.com
+
+During configuration and initial display of the Jmol applet in a view, you may have to refresh the browser.
+
+In the near future, we intend to release some variants of the Jmol plugin to display local structure files (pdb, mol, cif, xyz, sdf cml etc) and directly display biological macromolecules from the RSCB Protein Data Base (PDB) service and mineral crystal structures from the Crystallography Open Database (COD)
+
+http://www.pdb.org
+http://www.crystallography.net/
