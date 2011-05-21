@@ -44,15 +44,21 @@ class PluginBlocktypeJmolNih extends SystemBlocktype {
     }
 
     public static function get_categories() {
-        return array('feeds');
+        //Check Mahara release and change menu for Mahara 1.4
+    	  require_once(get_config('libroot') . 'version.php');
+		  $release = $config->release;
+		  if ($release < 1.4) {
+            return array('feeds');
+        }
+        return array('external');
     }
 
     public static function render_instance(BlockInstance $instance, $editing=false) {
         $configdata = $instance->get('configdata');
         $jmolnihid = clean_html(trim($configdata['jmolnihid']));
         $jmolnihid = preg_replace('/\s+/', ' ', $jmolnihid);
-        // urlencode search string: replace ' ' with %20, # with %23 etc
-        $jmolnihid2 = rawurlencode($jmolnihid);
+        $jmolnihid2 = str_replace(' ', '%20', $jmolnihid);
+        $jmolnihid2 = str_replace('#', '%23', $jmolnihid2);
 
         $width   = (!empty($configdata['width'])) ? hsc($configdata['width']) : '300';
         $height  = (!empty($configdata['height'])) ? hsc($configdata['height']) : '300';
@@ -65,7 +71,7 @@ class PluginBlocktypeJmolNih extends SystemBlocktype {
         if (isset($configdata['jmolnihid'])) {
            	$context = stream_context_create(array(
                 'http' => array(
-                    'timeout' => 5      // Timeout in seconds
+                    'timeout' => 3      // Timeout in seconds
                 )
             ));
             $sdf = '';
@@ -77,7 +83,7 @@ class PluginBlocktypeJmolNih extends SystemBlocktype {
                 // Check the HTTP Status code
                 if($status_code == 200) {
 		              // Success
-                    // Fix line endings, quotes etc
+                    // Fix line endings etc
                     $search = array("\r\n", "\r", "\n", '"');
                     $replace = array("\n", "\n", "\\n", "'");
                     $sdf = str_replace($search, $replace, $sdf);
@@ -201,5 +207,3 @@ jmolCheckbox("spin on", "spin off", "Spin", "", "", "Toggle spin on/off");
         return 'full';
     }
 }
-
-?>

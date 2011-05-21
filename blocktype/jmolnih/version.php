@@ -27,14 +27,12 @@
  * http://cactus.nci.nih.gov/chemical/structure
  *
  * It also uses the Jmol Java applet for interactive 3D rendering of
- * chemical dtructures
+ * chemical structures
  * http://jmol.sf.net
  */
-
+ 
 defined('INTERNAL') || die();
 
 $config = new StdClass;
-$config->version = 2011051700;
-$config->release = '0.0.1';
-
-?>
+$config->version = 2011052100;
+$config->release = '0.0.2';
